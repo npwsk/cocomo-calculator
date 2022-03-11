@@ -1,7 +1,9 @@
 import ratings from '../../ratings';
 import { effortMultipliersED } from '../../effortMultipliers';
+import coefficients from '../../coefficients';
 
 const earlyDesign = {
+  [coefficients.A]: 2.94,
   [effortMultipliersED.PERS]: {
     [ratings.EXTRA_LOW]: 2.12,
     [ratings.VERY_LOW]: 1.62,

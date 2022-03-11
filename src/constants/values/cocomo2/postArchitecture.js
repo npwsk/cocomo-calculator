@@ -1,7 +1,9 @@
 import ratings from '../../ratings';
 import { effortMultipliersPA } from '../../effortMultipliers';
+import coefficients from '../../coefficients';
 
 const postArchitecture = {
+  [coefficients.A]: 2.45,
   [effortMultipliersPA.ACAP]: {
     [ratings.VERY_LOW]: 1.42,
     [ratings.LOW]: 1.29,
