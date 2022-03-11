@@ -1,28 +1,35 @@
-import { Container, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Typography } from '@mui/material';
 import { Button, Box } from '@mui/material';
 
+import { models } from '../../constants';
+
 const Start = () => {
+  const { t } = useTranslation();
+
+  const modelsNames = t(`models`, { returnObjects: true });
+
   return (
-    <Container maxWidth="sm">
+    <>
       <Box sx={{ pb: 3 }}>
         <Typography variant="h3" gutterBottom component="div">
-          Welcome
+          {t('app-title')}
         </Typography>
         <Typography variant="body1" component="div">
-          About the app and each model
+          {t('about')}
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <Button component={RouterLink} to="/cocomo">
-          COCOMO
+          {modelsNames[models.COCOMO]}
         </Button>
 
         <Button component={RouterLink} to="/cocomo-2">
-          COCOMO II
+          {modelsNames[models.COCOMO_2]}
         </Button>
       </Box>
-    </Container>
+    </>
   );
 };
 

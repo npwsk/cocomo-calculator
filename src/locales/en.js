@@ -1,0 +1,5 @@
+const en = {
+  translation: {
+    models: {},
+  },
+};

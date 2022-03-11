@@ -5,7 +5,18 @@ import stages from './stages';
 import ratings from './ratings';
 import costDrivers from './costDrivers';
 import scaleFactors from './scaleFactors';
-import effortMultipliers from './effortMultipliers';
+import { effortMultipliersPA, effortMultipliersED } from './effortMultipliers';
 import coefficients from './coefficients';
 
-export { models };
+export {
+  models,
+  levels,
+  projectTypes,
+  stages,
+  ratings,
+  costDrivers,
+  scaleFactors,
+  effortMultipliersPA,
+  effortMultipliersED,
+  coefficients,
+};

@@ -1,3 +1,5 @@
+import ratings from './ratings';
+
 const costDrivers = {
   SOFTWARE_RELIABILITY: 'SOFTWARE_RELIABILITY',
   DATABASE_SIZE: 'DATABASE_SIZE',
