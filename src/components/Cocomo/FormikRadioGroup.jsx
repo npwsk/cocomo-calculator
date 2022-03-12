@@ -1,9 +1,12 @@
 import { Radio, RadioGroup, FormControlLabel, FormLabel, Box, FormControl } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import DescrTooltip from '../DescrTooltip';
 
-const renderOptions = (options, labelText) => {
+const renderOptions = (options, optionText) => {
   return options.map((option) => (
-    <FormControlLabel key={option} value={option} control={<Radio />} label={labelText[option].title} />
+    <DescrTooltip text={optionText[option].description}>
+      <FormControlLabel key={option} value={option} control={<Radio />} label={optionText[option].title} />
+    </DescrTooltip>
   ));
 };
 
@@ -20,7 +23,7 @@ const FormikRadioGroup = ({
 }) => {
   const fieldName = name || field.name;
   const { t } = useTranslation();
-  const labelText = t(tprefix, { returnObjects: true });
+  const optionText = t(tprefix, { returnObjects: true });
 
   return (
     <Box sx={{ py: 2 }}>
@@ -28,7 +31,7 @@ const FormikRadioGroup = ({
         <FormLabel id={id}>{label}</FormLabel>
 
         <RadioGroup {...field} {...props} name={fieldName} aria-labelledby={id}>
-          {options ? renderOptions(options, labelText) : children}
+          {options ? renderOptions(options, optionText) : children}
         </RadioGroup>
         {touched[fieldName] && errors[fieldName] && (
           <span style={{ color: 'red', fontFamily: 'sans-serif' }}>{errors[fieldName]}</span>

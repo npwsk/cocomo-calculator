@@ -14,6 +14,7 @@ import { cdRatings } from '../../constants/ratings';
 import { models } from '../../constants';
 import levels from '../../constants/levels';
 import costDriversValues from '../../constants/values/cocomo/costDrivers';
+import DescrTooltip from '../DescrTooltip';
 
 const validationSchema = Yup.object().shape({
   size: Yup.number().required('Please enter size').positive().integer('Must be positive integer'),
