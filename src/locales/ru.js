@@ -74,6 +74,16 @@ const ru = {
       title: 'Объем продукта',
       units: '(тыс. строк кода)',
     },
+    pm: {
+      title: 'Трудоемкость',
+      units: 'чел.×мес.',
+      description: 'PM (People×Month) – трудоемкость (чел.×мес.).',
+    },
+    tm: {
+      title: 'Время разработки',
+      units: 'мес.',
+      description: 'TM (Time at Month) – время разработки в календарных месяцах.',
+    }
   },
 };
 

@@ -20,12 +20,12 @@ const Start = () => {
           {t('about')}
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Button component={RouterLink} to="/cocomo">
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 10 }}>
+        <Button component={RouterLink} to="/cocomo" variant="outlined">
           {modelsNames[models.COCOMO]}
         </Button>
 
-        <Button component={RouterLink} to="/cocomo-2">
+        <Button component={RouterLink} to="/cocomo-2" variant="outlined">
           {modelsNames[models.COCOMO_2]}
         </Button>
       </Box>

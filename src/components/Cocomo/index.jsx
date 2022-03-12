@@ -4,6 +4,7 @@ import { Form, Formik, Field } from 'formik';
 import { TextField } from 'formik-mui';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import { useState } from 'react';
 
 import projectTypes from '../../constants/projectTypes';
 import costDrivers from '../../constants/costDrivers';
@@ -14,7 +15,8 @@ import { cdRatings } from '../../constants/ratings';
 import { models } from '../../constants';
 import levels from '../../constants/levels';
 import costDriversValues from '../../constants/values/cocomo/costDrivers';
-import DescrTooltip from '../DescrTooltip';
+import Result from '../Result/index';
+import { calcPM, calcTM } from '../../utils/calc/cocomo';
 
 const validationSchema = Yup.object().shape({
   size: Yup.number().required('Please enter size').positive().integer('Must be positive integer'),
@@ -30,8 +32,18 @@ const validationSchema = Yup.object().shape({
 const Cocomo = () => {
   const { t } = useTranslation();
 
+  const [result, setResult] = useState({
+    pm: 0,
+    tm: 0,
+  });
+
   const onSubmit = (values, actions) => {
     console.log(values);
+
+    const pm = calcPM(values);
+    const tm = calcTM(values);
+
+    setResult({ pm, tm });
     actions.setSubmitting(false);
   };
 
@@ -51,17 +63,7 @@ const Cocomo = () => {
   return (
     <Paper sx={{ py: 4, px: 4 }}>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-        {({
-          values,
-          handleChange,
-          handleSubmit,
-          errors,
-          touched,
-          handleBlur,
-          isValid,
-          dirty,
-          isSubmitting,
-        }) => (
+        {({ values, isSubmitting }) => (
           <Form>
             <FormLabel component="legend" sx={{ mb: 3, fontSize: 'h4.fontSize' }}>
               {t(`models.${models.COCOMO}`)}
@@ -72,11 +74,11 @@ const Cocomo = () => {
                 <Field
                   name="size"
                   component={TextField}
-                  label={`${t('size.title')}:`}
+                  label={t('size.title')}
                   aria-labelledby="size"
                 />
               </Grid>
-              <Grid item xs="auto"  sx={{display: 'flex', alignItems: 'center'}}>
+              <Grid item xs="auto" sx={{ display: 'flex', alignItems: 'center' }}>
                 <FormLabel id="size">{t('size.units')}</FormLabel>
               </Grid>
             </Grid>
@@ -100,7 +102,7 @@ const Cocomo = () => {
             />
 
             {values.level === levels.INTERMEDIATE && (
-              <Box>
+              <Box sx={{mb: 3}}>
                 {Object.keys(costDrivers).map((cd, i) => (
                   <Field
                     key={cd}
@@ -117,15 +119,19 @@ const Cocomo = () => {
               </Box>
             )}
 
-            <Button disabled={isSubmitting} type="submit">
-              Submit
-            </Button>
+            <Result {...result} />
+
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+              <Button disabled={isSubmitting} type="submit" variant="contained">
+                Submit
+              </Button>
+              <Button component={RouterLink} to="/" variant="outlined">
+                Restart
+              </Button>
+            </Box>
           </Form>
         )}
       </Formik>
-      <Button component={RouterLink} to="/">
-        Restart
-      </Button>
     </Paper>
   );
 };
