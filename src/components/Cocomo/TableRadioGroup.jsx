@@ -1,11 +1,11 @@
-import { Radio, RadioGroup, FormControlLabel, FormLabel, Box, FormControl } from '@mui/material';
+import { Radio, RadioGroup, FormLabel, Box, FormControl } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const renderOptions = (options, labelText, labelOptions) => {
+const renderOptions = (options, labelText, labelOptions, coefsData) => {
   return options.map((option) => (
     <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', width: '90px', textAlign: 'center'}} key={option}>
       {labelOptions && <FormLabel disabled >{labelText[option]}</FormLabel>}
-      <Radio value={option} />
+      <Radio value={option} disabled={!coefsData[option]} />
     </Box>
   ));
 };
@@ -20,6 +20,7 @@ const TableRadioGroup = ({
   children,
   tprefix,
   labelOptions,
+  coefsData,
   ...props
 }) => {
   const fieldName = name || field.name;
@@ -32,14 +33,14 @@ const TableRadioGroup = ({
       <FormControl
         component="fieldset"
         variant="filled"
-        sx={{ display: 'flex', flexDirection: 'row' }}
+        sx={{ display: 'flex', flexDirection: 'row', pb: 3 }}
       >
         <FormLabel id={id} sx={{ flexBasis: '400px', alignSelf: 'flex-end', pb: 2 }}>
           {label}
         </FormLabel>
 
         <RadioGroup {...field} {...props} name={fieldName} aria-labelledby={id}>
-          {options ? renderOptions(options, labelText, labelOptions) : children}
+          {options ? renderOptions(options, labelText, labelOptions, coefsData) : children}
         </RadioGroup>
         {touched[fieldName] && errors[fieldName] && (
           <span style={{ color: 'red', fontFamily: 'sans-serif' }}>{errors[fieldName]}</span>

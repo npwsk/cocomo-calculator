@@ -1,6 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, Paper, FormGroup, FormLabel, FormControlLabel } from '@mui/material';
-import { Form, Formik, Field, ErrorMessage } from 'formik';
+import { Button, Paper, FormLabel, FormControlLabel } from '@mui/material';
+import { Form, Formik, Field } from 'formik';
 import { TextField } from 'formik-mui';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -13,6 +13,7 @@ import TableRadioGroup from './TableRadioGroup';
 import { cdRatings } from '../../constants/ratings';
 import { models } from '../../constants';
 import levels from '../../constants/levels';
+import costDriversValues from '../../constants/values/cocomo/costDrivers';
 
 const validationSchema = Yup.object().shape({
   size: Yup.number().required('Please enter size').positive().integer('Must be positive integer'),
@@ -24,16 +25,6 @@ const validationSchema = Yup.object().shape({
     }, {})
   ),
 });
-
-const validateSize = (value) => {
-  let error;
-  if (!value) {
-    error = 'Required';
-  } else if (!/^\d+$/.test(value)) {
-    error = 'Must be a positive integer';
-  }
-  return error;
-};
 
 const Cocomo = () => {
   const { t } = useTranslation();
@@ -117,6 +108,7 @@ const Cocomo = () => {
                   options={cdRatings}
                   component={TableRadioGroup}
                   labelOptions={i === 0}
+                  coefsData={costDriversValues[cd]}
                   row
                 />
               ))}
