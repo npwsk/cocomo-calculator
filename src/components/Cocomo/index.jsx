@@ -1,41 +1,83 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, TextField, Paper, FormGroup, FormLabel, FormControlLabel } from '@mui/material';
-import { Form, Formik, Field } from 'formik';
+import { Button, Paper, FormGroup, FormLabel, FormControlLabel } from '@mui/material';
+import { Form, Formik, Field, ErrorMessage } from 'formik';
+import { TextField } from 'formik-mui';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 import projectTypes from '../../constants/projectTypes';
 import costDrivers from '../../constants/costDrivers';
 import ratings from '../../constants/ratings';
-import FormikRadioGroup from '../FormikRadioGroup';
+import FormikRadioGroup from './FormikRadioGroup';
+import TableRadioGroup from './TableRadioGroup';
 import { cdRatings } from '../../constants/ratings';
 import { models } from '../../constants';
+import levels from '../../constants/levels';
 
 const validationSchema = Yup.object().shape({
   size: Yup.number().required('Please enter size').positive().integer('Must be positive integer'),
   projectType: Yup.string().required('Please choose a project type'),
+  level: Yup.string().required('Please choose a level'),
+  costDrivers: Yup.object().shape(
+    Object.keys(costDrivers).reduce((obj, cd) => {
+      return { ...obj, [cd]: Yup.string().required('Please choose a value') };
+    }, {})
+  ),
 });
+
+const validateSize = (value) => {
+  let error;
+  if (!value) {
+    error = 'Required';
+  } else if (!/^\d+$/.test(value)) {
+    error = 'Must be a positive integer';
+  }
+  return error;
+};
 
 const Cocomo = () => {
   const { t } = useTranslation();
 
   const onSubmit = (values) => {
+    console.log(
+      Object.keys(costDrivers).reduce(
+        (obj, cd) => ({
+          ...obj,
+          [cd]: ratings.NOMINAL,
+        }),
+        {}
+      )
+    );
     console.log(values);
   };
 
   const initialValues = {
     size: '',
     projectType: projectTypes.ORGANIC,
-    costDrivers: Object.keys(costDrivers).reduce((obj, cd) => ({
-      ...obj,
-      [cd]: ratings.NOMINAL,
-    })),
+    level: levels.BASIC,
+    costDrivers: Object.keys(costDrivers).reduce(
+      (obj, cd) => ({
+        ...obj,
+        [cd]: ratings.NOMINAL,
+      }),
+      {}
+    ),
   };
 
   return (
     <Paper sx={{ p: 4 }}>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-        {({ isSubmitting, touched, values }) => (
+        {({
+          values,
+          handleChange,
+          handleSubmit,
+          errors,
+          touched,
+          handleBlur,
+          isValid,
+          dirty,
+          isSubmitting,
+        }) => (
           <Form>
             <FormLabel component="legend" sx={{ mb: 3, fontSize: 'h4.fontSize' }}>
               {t(`models.${models.COCOMO}`)}
@@ -51,22 +93,33 @@ const Cocomo = () => {
               name="projectType"
               label={t('project-type')}
               options={Object.values(projectTypes)}
+              tprefix="project-types"
               component={FormikRadioGroup}
               row
             />
-            <FormGroup>
-              {Object.keys(costDrivers).map((cd) => (
+
+            <Field
+              name="level"
+              label={t('levels.title')}
+              options={Object.values(levels)}
+              tprefix="levels"
+              component={FormikRadioGroup}
+              row
+            />
+
+            {values.level === levels.INTERMEDIATE &&
+              Object.keys(costDrivers).map((cd, i) => (
                 <Field
                   key={cd}
-                  name={cd}
-                  id={cd}
+                  name={`costDrivers.${cd}`}
                   label={t(`cost-drivers.${cd}`)}
+                  tprefix="ratings"
                   options={cdRatings}
-                  component={FormikRadioGroup}
+                  component={TableRadioGroup}
+                  labelOptions={i === 0}
                   row
                 />
               ))}
-            </FormGroup>
 
             <Button disabled={isSubmitting} type="submit">
               Submit

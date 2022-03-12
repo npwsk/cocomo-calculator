@@ -1,6 +1,7 @@
 import { models, projectTypes } from '../constants';
 import costDrivers from '../constants/costDrivers';
 import ratings from '../constants/ratings';
+import levels from '../constants/levels';
 
 const ru = {
   translation: {
@@ -9,11 +10,17 @@ const ru = {
       [models.COCOMO_2]: 'COCOMO II',
     },
     'project-types': {
-      [projectTypes.ORGANIC]: 'Распространенный тип',
-      [projectTypes.EMBEDDED]: 'Встроенный тип',
-      [projectTypes.SEMI_DETACHED]: 'Полунезависимый тип',
+      [projectTypes.ORGANIC]: 'Распространенный',
+      [projectTypes.EMBEDDED]: 'Встроенный',
+      [projectTypes.SEMI_DETACHED]: 'Полунезависимый',
+    },
+    levels: {
+      title: 'Уровень',
+      [levels.BASIC]: 'Базовый',
+      [levels.INTERMEDIATE]: 'Промежуточный',
     },
     'cost-drivers': {
+      'title': 'Арибуты стоимости',
       [costDrivers.SOFTWARE_RELIABILITY]: 'Требуемая надежность ПО',
       [costDrivers.DATABASE_SIZE]: 'Размер БД приложения',
       [costDrivers.PRODUCT_COMPLEXITY]: 'Сложность продукта',
