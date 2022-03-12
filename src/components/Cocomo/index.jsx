@@ -1,5 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, Paper, FormLabel, FormControlLabel } from '@mui/material';
+import { Button, Paper, FormLabel, Box, Grid } from '@mui/material';
 import { Form, Formik, Field } from 'formik';
 import { TextField } from 'formik-mui';
 import { useTranslation } from 'react-i18next';
@@ -29,17 +29,9 @@ const validationSchema = Yup.object().shape({
 const Cocomo = () => {
   const { t } = useTranslation();
 
-  const onSubmit = (values) => {
-    console.log(
-      Object.keys(costDrivers).reduce(
-        (obj, cd) => ({
-          ...obj,
-          [cd]: ratings.NOMINAL,
-        }),
-        {}
-      )
-    );
+  const onSubmit = (values, actions) => {
     console.log(values);
+    actions.setSubmitting(false);
   };
 
   const initialValues = {
@@ -56,7 +48,7 @@ const Cocomo = () => {
   };
 
   return (
-    <Paper sx={{ p: 4 }}>
+    <Paper sx={{ py: 4, px: 4 }}>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
         {({
           values,
@@ -74,15 +66,23 @@ const Cocomo = () => {
               {t(`models.${models.COCOMO}`)}
             </FormLabel>
 
-            <FormControlLabel
-              control={<Field name="size" component={TextField} sx={{ pl: 3 }} />}
-              label={`${t('size')}:`}
-              labelPlacement="start"
-            />
+            <Grid container spacing={2}>
+              <Grid item xs="auto">
+                <Field
+                  name="size"
+                  component={TextField}
+                  label={`${t('size.title')}:`}
+                  aria-labelledby="size"
+                />
+              </Grid>
+              <Grid item xs="auto"  sx={{display: 'flex', alignItems: 'center'}}>
+                <FormLabel id="size">{t('size.units')}</FormLabel>
+              </Grid>
+            </Grid>
 
             <Field
               name="projectType"
-              label={t('project-type')}
+              label={t('project-types.title')}
               options={Object.values(projectTypes)}
               tprefix="project-types"
               component={FormikRadioGroup}
@@ -98,20 +98,23 @@ const Cocomo = () => {
               row
             />
 
-            {values.level === levels.INTERMEDIATE &&
-              Object.keys(costDrivers).map((cd, i) => (
-                <Field
-                  key={cd}
-                  name={`costDrivers.${cd}`}
-                  label={t(`cost-drivers.${cd}`)}
-                  tprefix="ratings"
-                  options={cdRatings}
-                  component={TableRadioGroup}
-                  labelOptions={i === 0}
-                  coefsData={costDriversValues[cd]}
-                  row
-                />
-              ))}
+            {values.level === levels.INTERMEDIATE && (
+              <Box>
+                {Object.keys(costDrivers).map((cd, i) => (
+                  <Field
+                    key={cd}
+                    name={`costDrivers.${cd}`}
+                    label={t(`cost-drivers.${cd}`)}
+                    tprefix="ratings"
+                    options={cdRatings}
+                    component={TableRadioGroup}
+                    labelOptions={i === 0}
+                    coefsData={costDriversValues[cd]}
+                    row
+                  />
+                ))}
+              </Box>
+            )}
 
             <Button disabled={isSubmitting} type="submit">
               Submit

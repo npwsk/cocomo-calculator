@@ -10,7 +10,7 @@ function App() {
       <Box className="App" sx={{ p: 5 }}>
         <CssBaseline />
 
-        <Container maxWidth="m">
+        <Container maxWidth="md">
           <Routes>
             <Route path="/" element={<Start />} />
             <Route path="/cocomo" element={<Cocomo />} />

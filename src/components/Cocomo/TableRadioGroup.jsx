@@ -29,13 +29,13 @@ const TableRadioGroup = ({
   const labelText = t(tprefix, { returnObjects: true });
 
   return (
-    <Box>
+    <Box >
       <FormControl
         component="fieldset"
         variant="filled"
-        sx={{ display: 'flex', flexDirection: 'row', pb: 3 }}
+        sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', borderBottom: '1px solid lightgray' }}
       >
-        <FormLabel id={id} sx={{ flexBasis: '400px', alignSelf: 'flex-end', pb: 2 }}>
+        <FormLabel id={id} sx={{ flexBasis: '240px', alignSelf: labelOptions ? 'flex-end' : 'auto', pb: labelOptions ? 1 : 0 }}>
           {label}
         </FormLabel>
 

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 const renderOptions = (options, labelText) => {
   return options.map((option) => (
-    <FormControlLabel key={option} value={option} control={<Radio />} label={labelText[option]} />
+    <FormControlLabel key={option} value={option} control={<Radio />} label={labelText[option].title} />
   ));
 };
 
