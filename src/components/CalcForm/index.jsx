@@ -9,7 +9,7 @@ const CalcForm = ({ result, title, children, isSubmitting, handleChange, ...prop
   const { t } = useTranslation();
   return (
     <Form onChange={handleChange}>
-      <FormLabel component="legend" sx={{ mb: 0, fontSize: 'h4.fontSize' }}>
+      <FormLabel component="legend" sx={{ fontSize: 'h4.fontSize', mb: 2 }}>
         {title}
       </FormLabel>
 

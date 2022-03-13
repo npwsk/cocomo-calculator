@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <CssBaseline />
-        <Container sx={{ p: 0, my: 5, display: 'flex', flexDirection: 'column' }} maxWidth="md" >
+        <Container sx={{ p: 0, my: 5, display: 'flex', flexDirection: 'column' }} maxWidth="lg" >
           <Header/>
           <Paper sx={{ py: 4, px: 4 }}>
             <Routes>

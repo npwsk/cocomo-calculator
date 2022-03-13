@@ -1,11 +1,22 @@
 import { Radio, RadioGroup, FormLabel, Box, FormControl } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const renderOptions = (options, labelText, labelOptions, coefsData) => {
+import DescrTooltip from '../DescrTooltip';
+
+const renderOptions = (options, labelText, coefsData) => {
   return options.map((option) => (
-    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', width: '90px', textAlign: 'center'}} key={option}>
-      {labelOptions && <FormLabel disabled >{labelText[option]}</FormLabel>}
-      <Radio value={option} disabled={!coefsData[option]} />
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        textAlign: 'center',
+        width: '80px',
+      }}
+      key={option}
+    >
+      <DescrTooltip title={labelText[option]} placement="top">
+        <Radio value={option} disabled={coefsData[option] === null} />
+      </DescrTooltip>
     </Box>
   ));
 };
@@ -16,10 +27,9 @@ const TableRadioGroup = ({
   name,
   id,
   label,
+  description,
   options,
   children,
-  tprefix,
-  labelOptions,
   coefsData,
   key,
   ...props
@@ -27,21 +37,38 @@ const TableRadioGroup = ({
   const fieldName = name || field.name;
 
   const { t } = useTranslation();
-  const labelText = t(tprefix, { returnObjects: true });
+  const labelText = t('ratings', { returnObjects: true });
 
   return (
-    <Box >
+    <Box sx={{ borderBottom: '1px solid lightgray', '&:last-child': { borderBottom: 'none' }, my: 2 }}>
       <FormControl
         component="fieldset"
         variant="filled"
-        sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', borderBottom: '1px solid lightgray' }}
+        sx={{
+          display: 'flex',
+          flexDirection: {
+            xs: 'column',
+            lg: 'row',
+          },
+          alignItems: {
+            lg: 'center',
+          },
+        }}
       >
-        <FormLabel id={id} sx={{ flexBasis: '240px', alignSelf: labelOptions ? 'flex-end' : 'auto', pb: labelOptions ? 1 : 0 }}>
-          {label}
-        </FormLabel>
+        <DescrTooltip title={description}>
+          <FormLabel
+            id={id}
+            sx={{
+              flexGrow: 1,
+              pl: 1,
+            }}
+          >
+            {label}
+          </FormLabel>
+        </DescrTooltip>
 
         <RadioGroup {...field} {...props} name={fieldName} aria-labelledby={id}>
-          {options ? renderOptions(options, labelText, labelOptions, coefsData) : children}
+          {options ? renderOptions(options, labelText, coefsData) : children}
         </RadioGroup>
         {touched[fieldName] && errors[fieldName] && (
           <span style={{ color: 'red', fontFamily: 'sans-serif' }}>{errors[fieldName]}</span>

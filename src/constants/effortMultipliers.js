@@ -1,3 +1,5 @@
+import stages from './stages';
+
 const effortMultipliersED = {
   PERS: 'PERS',
   PREX: 'PREX',
@@ -28,4 +30,12 @@ const effortMultipliersPA = {
   SCED: 'SCED',
 };
 
+const effortMultipliers = {
+  [stages.EARLY_DESIGN]: effortMultipliersED,
+  [stages.POST_ARCHITECTURE]: effortMultipliersPA,
+};
+
+
 export { effortMultipliersED, effortMultipliersPA };
+
+export default effortMultipliers;

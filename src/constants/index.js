@@ -5,9 +5,9 @@ import stages from './stages';
 import ratings from './ratings';
 import costDrivers from './costDrivers';
 import scaleFactors from './scaleFactors';
-import { effortMultipliersPA, effortMultipliersED } from './effortMultipliers';
+import effortMultipliers, { effortMultipliersPA, effortMultipliersED } from './effortMultipliers';
 import coefficients from './coefficients';
-import { cdRatings } from './ratings';
+import { cdRatings, sfRatings, emRatings } from './ratings';
 
 export {
   models,
@@ -16,8 +16,11 @@ export {
   stages,
   ratings,
   cdRatings,
+  sfRatings,
+  emRatings,
   costDrivers,
   scaleFactors,
+  effortMultipliers,
   effortMultipliersPA,
   effortMultipliersED,
   coefficients,

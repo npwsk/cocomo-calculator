@@ -13,7 +13,7 @@ const StyledTooltip = styled(({ className, ...props }) => (
 
 const DescrTooltip = ({ title, children, ...props}) => {
   return (
-    <StyledTooltip arrow title={title} {...props} placement="right-start">
+    <StyledTooltip arrow title={title} placement="right" {...props}>
         {children}
       </StyledTooltip>
   );

@@ -88,7 +88,8 @@ const Cocomo = () => {
               <Field
                 key={cd}
                 name={`costDrivers.${cd}`}
-                label={t(`cost-drivers.${cd}`)}
+                label={t(`cost-drivers.${cd}.title`)}
+                description={t(`cost-drivers.${cd}.description`)}
                 tprefix="ratings"
                 options={cdRatings}
                 component={TableRadioGroup}

@@ -1,3 +1,5 @@
+import stages from './stages';
+
 const ratings = {
   EXTRA_LOW: 'EXTRA_LOW',
   VERY_LOW: 'VERY_LOW',
@@ -9,7 +11,7 @@ const ratings = {
 };
 
 const cdRatings = [
-  ratings.EXTRA_LOW,
+  ratings.VERY_LOW,
   ratings.LOW,
   ratings.NOMINAL,
   ratings.HIGH,
@@ -17,6 +19,13 @@ const cdRatings = [
   ratings.EXTRA_HIGH,
 ];
 
-export { cdRatings };
+const sfRatings = cdRatings;
+
+const emRatings = {
+  [stages.EARLY_DESIGN]: Object.values(ratings),
+  [stages.POST_ARCHITECTURE]: cdRatings
+};
+
+export { cdRatings, sfRatings, emRatings };
 
 export default ratings;
