@@ -8,10 +8,12 @@ const Header = () => {
 
   const pages = [
     {
+      key: models.COCOMO,
       title: t(`models.${models.COCOMO}.title`),
       to: '/cocomo',
     },
     {
+      key: models.COCOMO_2,
       title: t(`models.${models.COCOMO_2}.title`),
       to: '/cocomo-2',
     },
@@ -32,7 +34,7 @@ const Header = () => {
               <Button
                 component={RouterLink}
                 to={page.to}
-                key={page}
+                key={page.title}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page.title}

@@ -11,7 +11,7 @@ const calcPM = ({ projectType, level, costDrivers, size }) => {
 
     case levels.INTERMEDIATE:
       const costDriversProduct = Object.entries(costDrivers)
-        .map(([cd, rating]) => [cd, cocomo[cd][rating]])
+        .map(([cd, rating]) => cocomo[cd][rating])
         .reduce((product, val) => product * val, 1);
       return (costDriversProduct * a * size ** b).toFixed(2);
 
@@ -21,7 +21,7 @@ const calcPM = ({ projectType, level, costDrivers, size }) => {
 };
 
 const calcTM = ({ projectType, level, costDrivers, size }) => {
-  const { [coefficients.C]: c, [coefficients.D]: d } = cocomo[projectType][level];
+  const { [coefficients.C]: c, [coefficients.D]: d } = cocomo[projectType][levels.BASIC];
 
   const pm = calcPM({ projectType, level, costDrivers, size });
 

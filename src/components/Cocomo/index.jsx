@@ -1,25 +1,22 @@
-import { Link as RouterLink } from 'react-router-dom';
-import { Button, Paper, FormLabel, Box, Grid, Divider } from '@mui/material';
-import { Form, Formik, Field } from 'formik';
-import { TextField } from 'formik-mui';
+import { Formik, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { useState } from 'react';
 
-import projectTypes from '../../constants/projectTypes';
-import costDrivers from '../../constants/costDrivers';
-import ratings from '../../constants/ratings';
-import FormikRadioGroup from './FormikRadioGroup';
-import TableRadioGroup from './TableRadioGroup';
-import { cdRatings } from '../../constants/ratings';
-import { models } from '../../constants';
-import levels from '../../constants/levels';
+import CalcForm from '../CalcForm';
+import TableRadioGroup from '../TableRadioGroup';
+import FormikRadioGroup from '../FormikRadioGroup';
+
+import { models, ratings, costDrivers, projectTypes, cdRatings, levels } from '../../constants';
 import costDriversValues from '../../constants/values/cocomo/costDrivers';
-import Result from '../Result/index';
 import { calcPM, calcTM } from '../../utils/calc/cocomo';
+import changeProp from '../../utils/changeProp';
 
 const validationSchema = Yup.object().shape({
-  size: Yup.number().required('Please enter size').positive().integer('Must be positive integer'),
+  size: Yup.number('Must be a number')
+    .required('Please enter size')
+    .positive('Must be positive')
+    .integer('Must be integer'),
   projectType: Yup.string().required('Please choose a project type'),
   level: Yup.string().required('Please choose a level'),
   costDrivers: Yup.object().shape(
@@ -37,14 +34,13 @@ const Cocomo = () => {
     tm: 0,
   });
 
-  const onSubmit = (values, actions) => {
-    console.log(values);
+  const onChange = (e, prevValues) => {
+    const values = changeProp(prevValues, e.target.value, e.target.name);
 
     const pm = calcPM(values);
     const tm = calcTM(values);
 
     setResult({ pm, tm });
-    actions.setSubmitting(false);
   };
 
   const initialValues = {
@@ -61,78 +57,49 @@ const Cocomo = () => {
   };
 
   return (
-    <Paper sx={{ py: 4, px: 4 }}>
-      <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-        {({ values, isSubmitting }) => (
-          <Form>
-            <FormLabel component="legend" sx={{ mb: 0, fontSize: 'h4.fontSize' }}>
-              {t(`models.${models.COCOMO.title}`)}
-            </FormLabel>
+    <Formik initialValues={initialValues} validationSchema={validationSchema}>
+      {({ values, isSubmitting }) => (
+        <CalcForm
+          title={t(`models.${models.COCOMO}.title`)}
+          result={result}
+          isSubmitting={isSubmitting}
+          handleChange={(e) => onChange(e, values)}
+        >
+          <Field
+            name="projectType"
+            label={t('project-types.title')}
+            options={Object.values(projectTypes)}
+            tprefix="project-types"
+            component={FormikRadioGroup}
+            row
+          />
 
-            <Divider variant="midddle" />
+          <Field
+            name="level"
+            label={t('levels.title')}
+            options={Object.values(levels)}
+            tprefix="levels"
+            component={FormikRadioGroup}
+            row
+          />
 
-            <Result {...result} />
-
-            <Grid container spacing={2}>
-              <Grid item xs="auto">
-                <Field
-                  name="size"
-                  component={TextField}
-                  label={t('size.title')}
-                  aria-labelledby="size"
-                />
-              </Grid>
-              <Grid item xs="auto" sx={{ display: 'flex', alignItems: 'center' }}>
-                <FormLabel id="size">{t('size.units')}</FormLabel>
-              </Grid>
-            </Grid>
-
-            <Field
-              name="projectType"
-              label={t('project-types.title')}
-              options={Object.values(projectTypes)}
-              tprefix="project-types"
-              component={FormikRadioGroup}
-              row
-            />
-
-            <Field
-              name="level"
-              label={t('levels.title')}
-              options={Object.values(levels)}
-              tprefix="levels"
-              component={FormikRadioGroup}
-              row
-            />
-
-            {values.level === levels.INTERMEDIATE &&
-                Object.keys(costDrivers).map((cd, i) => (
-                  <Field
-                    key={cd}
-                    name={`costDrivers.${cd}`}
-                    label={t(`cost-drivers.${cd}`)}
-                    tprefix="ratings"
-                    options={cdRatings}
-                    component={TableRadioGroup}
-                    labelOptions={i === 0}
-                    coefsData={costDriversValues[cd]}
-                    row
-                  />
-                )
-            )}
-
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-              <Button disabled={isSubmitting} type="submit" variant="contained">
-                Submit
-              </Button>
-              <Button component={RouterLink} to="/" variant="outlined">
-                Restart
-              </Button>
-            </Box>
-          </Form>
-        )}
-      </Formik>
-    </Paper>
+          {values.level === levels.INTERMEDIATE &&
+            Object.keys(costDrivers).map((cd, i) => (
+              <Field
+                key={cd}
+                name={`costDrivers.${cd}`}
+                label={t(`cost-drivers.${cd}`)}
+                tprefix="ratings"
+                options={cdRatings}
+                component={TableRadioGroup}
+                labelOptions={i === 0}
+                coefsData={costDriversValues[cd]}
+                row
+              />
+            ))}
+        </CalcForm>
+      )}
+    </Formik>
   );
 };
 

@@ -21,6 +21,7 @@ const TableRadioGroup = ({
   tprefix,
   labelOptions,
   coefsData,
+  key,
   ...props
 }) => {
   const fieldName = name || field.name;
