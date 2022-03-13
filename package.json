@@ -4,6 +4,10 @@
   "private": true,
   "main": "electron/main.js",
   "homepage": "./",
+  "author": {
+    "name": "Ника Перфилова",
+    "email": "gmees2016@gmail.com"
+  },
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
@@ -58,12 +62,35 @@
     ]
   },
   "build": {
-    "appId": "com.example.electron-react",
-    "productName": "cocomo-calculator",
+    "appId": "com.electron.cocomo-calculator",
+    "productName": "Калькулятор COCOMO",
     "files": [
       "build/**/*",
       "node_modules/**/*"
-    ]
+    ],
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "license": "LICENSE.txt"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/icon.png"
+    }
   },
   "devDependencies": {
     "electron": "^17.1.0",
