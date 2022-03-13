@@ -22,8 +22,16 @@ const Header = () => {
   return (
     <Box sx={{ bgcolor: 'background.paper', width: '100%' }}>
       <AppBar position="static" sx={{ px: 2 }}>
-        <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Button component={RouterLink} to="/" sx={{ my: 2, color: 'white', display: 'block' }}>
+        <Toolbar
+          disableGutters
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexDirection: { xs: 'column', sm: 'row' },
+            my: { xs: 0, sm: 1 }
+          }}
+        >
+          <Button component={RouterLink} to="/" sx={{ color: 'white', display: 'block' }}>
             <Typography variant="h6" noWrap>
               {t('app-title')}
             </Typography>
@@ -35,7 +43,7 @@ const Header = () => {
                 component={RouterLink}
                 to={page.to}
                 key={page.title}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ color: 'white', display: 'block' }}
               >
                 {page.title}
               </Button>

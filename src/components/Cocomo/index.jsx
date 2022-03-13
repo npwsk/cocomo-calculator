@@ -11,6 +11,7 @@ import { models, ratings, costDrivers, projectTypes, cdRatings, levels } from '.
 import costDriversValues from '../../constants/values/cocomo/costDrivers';
 import { calcPM, calcTM } from '../../utils/calc/cocomo';
 import changeProp from '../../utils/changeProp';
+import FieldTable from '../FieldsTable/index';
 
 const validationSchema = Yup.object().shape({
   size: Yup.number('Must be a number')
@@ -83,21 +84,24 @@ const Cocomo = () => {
             row
           />
 
-          {values.level === levels.INTERMEDIATE &&
-            Object.keys(costDrivers).map((cd, i) => (
-              <Field
-                key={cd}
-                name={`costDrivers.${cd}`}
-                label={t(`cost-drivers.${cd}.title`)}
-                description={t(`cost-drivers.${cd}.description`)}
-                tprefix="ratings"
-                options={cdRatings}
-                component={TableRadioGroup}
-                labelOptions={i === 0}
-                coefsData={costDriversValues[cd]}
-                row
-              />
-            ))}
+          {values.level === levels.INTERMEDIATE && (
+            <FieldTable label={t('cost-drivers.title')} description={t('cost-drivers.description')}>
+              {' '}
+              {Object.keys(costDrivers).map((cd, i) => (
+                <Field
+                  key={cd}
+                  name={`costDrivers.${cd}`}
+                  label={t(`cost-drivers.${cd}.title`)}
+                  description={t(`cost-drivers.${cd}.description`)}
+                  tprefix="ratings"
+                  options={cdRatings}
+                  component={TableRadioGroup}
+                  coefsData={costDriversValues[cd]}
+                  row
+                />
+              ))}
+            </FieldTable>
+          )}
         </CalcForm>
       )}
     </Formik>

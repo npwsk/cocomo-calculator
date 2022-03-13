@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { CssBaseline, Box, Container, Paper, Grid } from '@mui/material';
+import { CssBaseline, Container, Paper } from '@mui/material';
 import Start from './components/Start';
 import Cocomo from './components/Cocomo';
 import Cocomo2 from './components/Cocomo2';
@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <CssBaseline />
-        <Container sx={{ p: 0, my: 5, display: 'flex', flexDirection: 'column' }} maxWidth="lg" >
+        <Container sx={{ p: 0, my: { xs: 0, sm: 5 }, display: 'flex', flexDirection: 'column' }} maxWidth="lg" >
           <Header/>
           <Paper sx={{ py: 4, px: 4 }}>
             <Routes>
