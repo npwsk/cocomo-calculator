@@ -1,5 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, Paper, FormLabel, Box, Grid } from '@mui/material';
+import { Button, Paper, FormLabel, Box, Grid, Divider } from '@mui/material';
 import { Form, Formik, Field } from 'formik';
 import { TextField } from 'formik-mui';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +17,7 @@ import levels from '../../constants/levels';
 import costDriversValues from '../../constants/values/cocomo/costDrivers';
 import Result from '../Result/index';
 import { calcPM, calcTM } from '../../utils/calc/cocomo';
+import Collapse from '../Collapse';
 
 const validationSchema = Yup.object().shape({
   size: Yup.number().required('Please enter size').positive().integer('Must be positive integer'),
@@ -65,9 +66,13 @@ const Cocomo = () => {
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
         {({ values, isSubmitting }) => (
           <Form>
-            <FormLabel component="legend" sx={{ mb: 3, fontSize: 'h4.fontSize' }}>
+            <FormLabel component="legend" sx={{ mb: 0, fontSize: 'h4.fontSize' }}>
               {t(`models.${models.COCOMO}`)}
             </FormLabel>
+
+            <Divider variant="midddle" />
+
+            <Result {...result} />
 
             <Grid container spacing={2}>
               <Grid item xs="auto">
@@ -101,9 +106,8 @@ const Cocomo = () => {
               row
             />
 
-            {values.level === levels.INTERMEDIATE && (
-              <Box sx={{mb: 3}}>
-                {Object.keys(costDrivers).map((cd, i) => (
+            {values.level === levels.INTERMEDIATE &&
+                Object.keys(costDrivers).map((cd, i) => (
                   <Field
                     key={cd}
                     name={`costDrivers.${cd}`}
@@ -115,11 +119,8 @@ const Cocomo = () => {
                     coefsData={costDriversValues[cd]}
                     row
                   />
-                ))}
-              </Box>
+                )
             )}
-
-            <Result {...result} />
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
               <Button disabled={isSubmitting} type="submit" variant="contained">

@@ -1,7 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
-import { Button, Box } from '@mui/material';
+import { Typography, Accordion, AccordionSummary, AccordionDetails, Button, Box  } from '@mui/material';
 
 import { models } from '../../constants';
 
@@ -13,13 +12,12 @@ const Start = () => {
   return (
     <>
       <Box sx={{ pb: 3 }}>
-        <Typography variant="h3" gutterBottom component="div">
-          {t('app-title')}
-        </Typography>
+
         <Typography variant="body1" component="div">
           {t('about')}
         </Typography>
       </Box>
+
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 10 }}>
         <Button component={RouterLink} to="/cocomo" variant="outlined">
           {modelsNames[models.COCOMO]}

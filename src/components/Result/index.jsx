@@ -5,6 +5,7 @@ import {
   Divider,
   Typography,
   Grid,
+  Box
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -14,8 +15,7 @@ const Result = ({ pm, tm, ...props }) => {
   const tmText = t('tm', { returnObjects: true });
 
   return (
-    <Card sx={{ width: 500, mx: 'auto' }}>
-      <CardContent>
+    <Box sx={{ width: 500, mx: 'auto', my: 3 }}>
         <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center">
           <Grid item xs={5}>
             <Tooltip title={pmText.description} arrow>
@@ -55,8 +55,7 @@ const Result = ({ pm, tm, ...props }) => {
             <Typography variant="caption" component='div' align="center">{tmText.units}</Typography>
           </Grid>
         </Grid>
-      </CardContent>
-    </Card>
+    </Box>
   );
 };
 
