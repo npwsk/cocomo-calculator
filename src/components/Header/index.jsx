@@ -8,11 +8,11 @@ const Header = () => {
 
   const pages = [
     {
-      title: t(`models.${models.COCOMO}`),
+      title: t(`models.${models.COCOMO}.title`),
       to: '/cocomo',
     },
     {
-      title: t(`models.${models.COCOMO_2}`),
+      title: t(`models.${models.COCOMO_2}.title`),
       to: '/cocomo-2',
     },
   ];

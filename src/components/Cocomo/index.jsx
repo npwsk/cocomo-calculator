@@ -17,7 +17,6 @@ import levels from '../../constants/levels';
 import costDriversValues from '../../constants/values/cocomo/costDrivers';
 import Result from '../Result/index';
 import { calcPM, calcTM } from '../../utils/calc/cocomo';
-import Collapse from '../Collapse';
 
 const validationSchema = Yup.object().shape({
   size: Yup.number().required('Please enter size').positive().integer('Must be positive integer'),
@@ -67,7 +66,7 @@ const Cocomo = () => {
         {({ values, isSubmitting }) => (
           <Form>
             <FormLabel component="legend" sx={{ mb: 0, fontSize: 'h4.fontSize' }}>
-              {t(`models.${models.COCOMO}`)}
+              {t(`models.${models.COCOMO.title}`)}
             </FormLabel>
 
             <Divider variant="midddle" />
