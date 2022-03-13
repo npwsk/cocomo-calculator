@@ -2,10 +2,10 @@ import coefficients from '../../coefficients';
 import levels from '../../levels';
 
 const basic = {
-  [coefficients.A]: 3.6,
-  [coefficients.B]: 1.2,
+  [coefficients.A]: 3,
+  [coefficients.B]: 1.12,
   [coefficients.C]: 2.5,
-  [coefficients.D]: 0.32,
+  [coefficients.D]: 0.35,
 };
 
 const intermediate = {
