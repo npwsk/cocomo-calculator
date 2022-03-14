@@ -86,10 +86,6 @@
         "AppImage",
         "deb"
       ]
-    },
-    "mac": {
-      "target": "dmg",
-      "icon": "build/icon.png"
     }
   },
   "devDependencies": {
