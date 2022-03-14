@@ -38,10 +38,10 @@
     "start-electron": "export ELECTRON_START_URL=http://localhost:3000 && electron .",
     "start-electron-win": "set ELECTRON_START_URL=http://localhost:3000 && electron .",
     "build": "react-scripts build",
-    "build-electron": "mkdir build/src && cp -r electron/. build/electron",
-    "build-electron-win": "mkdir build\\src && Xcopy /E /I /Y electron build\\electron",
-    "package": "npm run build && npm run build-electron && electron-builder build -c.extraMetadata.main=build/electron/main.js --publish never",
-    "package-win": "npm run build && npm run build-electron-win && electron-builder build -c.extraMetadata.main=build/electron/main.js --publish never"
+    "build-electron": "npm run build && mkdir build/src && cp -r electron/. build/electron",
+    "build-electron-win": "npm run build && mkdir build\\src && Xcopy /E /I /Y electron build\\electron",
+    "package": "npm run build-electron && electron-builder build -c.extraMetadata.main=build/electron/main.js --publish never",
+    "package-win": "npm run build-electron-win && electron-builder build -c.extraMetadata.main=build/electron/main.js --publish never"
   },
   "eslintConfig": {
     "extends": [
