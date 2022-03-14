@@ -4,7 +4,7 @@ import DescrTooltip from '../DescrTooltip';
 
 const renderOptions = (options, optionText) => {
   return options.map((option) => (
-    <DescrTooltip key={option} title={optionText[option].description}>
+    <DescrTooltip key={option} title={optionText[option].description} placement="bottom">
       <FormControlLabel value={option} control={<Radio />} label={optionText[option].title} />
     </DescrTooltip>
   ));

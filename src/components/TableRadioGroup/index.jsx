@@ -55,7 +55,7 @@ const TableRadioGroup = ({
           },
         }}
       >
-        <DescrTooltip title={description}>
+        <DescrTooltip title={description} placement="bottom">
           <FormLabel
             id={id}
             sx={{
