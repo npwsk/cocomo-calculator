@@ -19,6 +19,14 @@ jobs:
         with:
           node-version: 14
 
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build React app
+        run: npm run build
+        env:
+            CI: false
+
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         env:
