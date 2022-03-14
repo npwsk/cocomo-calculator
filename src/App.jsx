@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { CssBaseline, Container, Paper } from '@mui/material';
 import Start from './components/Start';
 import Cocomo from './components/Cocomo';
@@ -7,7 +7,7 @@ import Header from './components/Header';
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="App">
         <CssBaseline />
         <Container sx={{ p: 0, my: { xs: 0, sm: 5 }, display: 'flex', flexDirection: 'column' }} maxWidth="lg" >
@@ -21,7 +21,7 @@ function App() {
           </Paper>
         </Container>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
