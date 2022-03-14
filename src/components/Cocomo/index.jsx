@@ -14,10 +14,11 @@ import changeProp from '../../utils/changeProp';
 import FieldTable from '../FieldsTable/index';
 
 const validationSchema = Yup.object().shape({
-  size: Yup.number('Must be a number')
-    .required('Please enter size')
+  size: Yup.number()
+    .typeError('Must be a number')
     .positive('Must be positive')
-    .integer('Must be integer'),
+    .integer('Must be integer')
+    .required('Please enter size'),
   projectType: Yup.string().required('Please choose a project type'),
   level: Yup.string().required('Please choose a level'),
   costDrivers: Yup.object().shape(
@@ -35,8 +36,14 @@ const Cocomo = () => {
     tm: 0,
   });
 
-  const onChange = (e, prevValues) => {
+  const onChange = async (e, prevValues) => {
     const values = changeProp(prevValues, e.target.value, e.target.name);
+
+    try {
+      await validationSchema.validate(values);
+    } catch (e) {
+      return;
+    }
 
     const pm = calcPM(values);
     const tm = calcTM(values);

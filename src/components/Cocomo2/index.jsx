@@ -11,7 +11,6 @@ import FieldTable from '../FieldsTable';
 import {
   models,
   ratings,
-  costDrivers,
   stages,
   scaleFactors,
   sfRatings,
@@ -24,17 +23,29 @@ import { calcPM, calcTM } from '../../utils/calc/cocomo2';
 import changeProp from '../../utils/changeProp';
 
 const validationSchema = Yup.object().shape({
-  size: Yup.number('Must be a number')
-    .required('Please enter size')
+  size: Yup.number()
+    .typeError('Must be a number')
     .positive('Must be positive')
-    .integer('Must be integer'),
+    .integer('Must be integer')
+    .required('Please enter size'),
   stage: Yup.string().required('Please choose a stage'),
-  level: Yup.string().required('Please choose a level'),
-  costDrivers: Yup.object().shape(
-    Object.keys(costDrivers).reduce((obj, cd) => {
-      return { ...obj, [cd]: Yup.string().required('Please choose a value') };
+  scaleFactors: Yup.object().shape(
+    Object.keys(scaleFactors).reduce((obj, sf) => {
+      return { ...obj, [sf]: Yup.string().required('Please choose a value') };
     }, {})
   ),
+  effortMultipliers: Yup.object().shape({
+    [stages.EARLY_DESIGN]: Yup.object().shape(
+      Object.keys(effortMultipliers[stages.EARLY_DESIGN]).reduce((obj, em) => {
+        return { ...obj, [em]: Yup.string().required('Please choose a value') };
+      }, {})
+    ),
+    [stages.POST_ARCHITECTURE]: Yup.object().shape(
+      Object.keys(effortMultipliers[stages.POST_ARCHITECTURE]).reduce((obj, em) => {
+        return { ...obj, [em]: Yup.string().required('Please choose a value') };
+      }, {})
+    ),
+  }),
 });
 
 const Cocomo2 = () => {
@@ -45,8 +56,14 @@ const Cocomo2 = () => {
     tm: 0,
   });
 
-  const onChange = (e, prevValues) => {
+  const onChange = async (e, prevValues) => {
     const values = changeProp(prevValues, e.target.value, e.target.name);
+
+    try {
+      await validationSchema.validate(values);
+    } catch (e) {
+      return;
+    }
 
     const pm = calcPM(values);
     const tm = calcTM(values);
