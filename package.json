@@ -1,6 +1,6 @@
 {
   "name": "cocomo-calculator",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "private": true,
   "main": "electron/main.js",
   "homepage": "./",
@@ -76,8 +76,7 @@
       "license": "license.txt"
     },
     "mac": {
-      "target": "dmg",
-      "category": "public.app-category.utilities"
+      "target": "dmg"
     },
     "win": {
       "target": [
