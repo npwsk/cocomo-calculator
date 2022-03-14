@@ -36,7 +36,7 @@ jobs:
           # release the app after building
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
           build_script_name: build-electron
-          args: "-c.extraMetadata.main=build/electron/main.js --publish never"
+          args: "-c.extraMetadata.main=build/electron/main.js"
 
       - name: Build/release Electron app on windows
         uses: samuelmeuli/action-electron-builder@v1
@@ -52,4 +52,4 @@ jobs:
           # release the app after building
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
           build_script_name: build-electron-win
-          args: "-c.extraMetadata.main=build/electron/main.js --publish never"
+          args: "-c.extraMetadata.main=build/electron/main.js"
