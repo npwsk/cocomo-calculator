@@ -1,6 +1,6 @@
 {
   "name": "cocomo-calculator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "main": "electron/main.js",
   "homepage": "./",
@@ -8,6 +8,7 @@
     "name": "Ника Перфилова",
     "email": "gmees2016@gmail.com"
   },
+  "description": "Приложение для рачета стоимости разработки программного обеспечения по моделям COCOMO и COCOMO II",
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
@@ -74,18 +75,19 @@
       "allowToChangeInstallationDirectory": true,
       "license": "LICENSE.txt"
     },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities"
+    },
     "win": {
-      "target": [
-        {
-          "target": "nsis"
-        }
-      ]
+      "target": "nsis"
     },
     "linux": {
       "target": [
         "AppImage",
         "deb"
-      ]
+      ],
+      "category": "Utility"
     }
   },
   "devDependencies": {
