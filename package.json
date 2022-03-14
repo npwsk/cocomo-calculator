@@ -73,7 +73,7 @@
       "oneClick": false,
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,
-      "license": "LICENSE.txt"
+      "license": "license.txt"
     },
     "mac": {
       "target": "dmg",
